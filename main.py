@@ -1,6 +1,70 @@
 from tkinter import *
 import tkintermapview
 
+employees: list = []
+institutions: list = []
+clients: list = []
+
+class Employee:
+    def __init__(self, name, surname, location, institution):
+        self.name = name
+        self.surname = surname
+        self.location = location
+        self.instytution = institution
+        self.coordinates = self.get_coordinates()
+        self.marker = map_widget.set_marker(self.coordinates[0], self.coordinates[1],
+                                            text=f"{self.location} {self.name}")
+
+    def get_coordinates(self) -> list:
+        import requests
+        from bs4 import BeautifulSoup
+        adres_url: str = f'https://pl.wikipedia.org/wiki/{self.location}'
+        response_html = BeautifulSoup(requests.get(adres_url).text, 'html.parser')
+        return [
+            float(response_html.select('.latitude')[1].text.replace(',', '.')),
+            float(response_html.select('.longitude')[1].text.replace(',', '.')),
+        ]
+
+class Institution:
+    def __init__(self, name, location, employee):
+        self.name = name
+        self.location = location
+        self.employee = employee
+        self.coordinates = self.get_coordinates()
+        self.marker = map_widget.set_marker(self.coordinates[0], self.coordinates[1],
+                                            text=f"{self.location} {self.name}")
+
+    def get_coordinates(self) -> list:
+        import requests
+        from bs4 import BeautifulSoup
+        adres_url: str = f'https://pl.wikipedia.org/wiki/{self.location}'
+        response_html = BeautifulSoup(requests.get(adres_url).text, 'html.parser')
+        return [
+            float(response_html.select('.latitude')[1].text.replace(',', '.')),
+            float(response_html.select('.longitude')[1].text.replace(',', '.')),
+        ]
+
+class Client:
+    def __init__(self, name, surname, location, pet, institution):
+        self.name = name
+        self.surname = surname
+        self.location = location
+        self.pet = pet
+        self.instytution = institution
+        self.coordinates = self.get_coordinates()
+        self.marker = map_widget.set_marker(self.coordinates[0], self.coordinates[1],
+                                            text=f"{self.location} {self.name}")
+
+    def get_coordinates(self) -> list:
+        import requests
+        from bs4 import BeautifulSoup
+        adres_url: str = f'https://pl.wikipedia.org/wiki/{self.location}'
+        response_html = BeautifulSoup(requests.get(adres_url).text, 'html.parser')
+        return [
+            float(response_html.select('.latitude')[1].text.replace(',', '.')),
+            float(response_html.select('.longitude')[1].text.replace(',', '.')),
+        ]
+
 root = Tk()
 
 root.geometry("1400x850")
@@ -190,6 +254,12 @@ label_szczegoly_obiektu_pet.grid(row=1, column=6)
 
 label_szczegoly_obiektu_pet_wartosc = Label(ramka_szczegoly_obiektu3, text='....')
 label_szczegoly_obiektu_pet_wartosc.grid(row=1, column=7)
+
+label_szczegoly_obiektu3_institution = Label(ramka_szczegoly_obiektu3, text='Placówka:')
+label_szczegoly_obiektu3_institution.grid(row=1, column=8)
+
+label_szczegoly_obiektu3_institution_wartosc = Label(ramka_szczegoly_obiektu3, text='....')
+label_szczegoly_obiektu3_institution_wartosc.grid(row=1, column=9)
 
 # ramka_mapa
 map_widget = tkintermapview.TkinterMapView(ramka_mapa, width=1400, height=600, corner_radius=0)
