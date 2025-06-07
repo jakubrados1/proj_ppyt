@@ -130,6 +130,12 @@ def show_employee():
     for idx, employee in enumerate(employees):
         listbox_lista_obiektow.insert(idx, f'{idx + 1}. {employee.name} {employee.surname}')
 
+def remove_employee():
+    i = listbox_lista_obiektow.index(ACTIVE)
+    employees[i].marker.delete()
+    employees.pop(i)
+    show_employee()
+
 def open_form_institutions():
     def add_institution() -> None:
         name = entry_nazwa.get()
@@ -187,6 +193,12 @@ def show_institution():
     listbox_lista_obiektow2.delete(0, END)
     for idx, institution in enumerate(institutions):
         listbox_lista_obiektow2.insert(idx, f'{idx + 1}. {institution.name} {institution.location}')
+
+def remove_institution():
+    i = listbox_lista_obiektow2.index(ACTIVE)
+    institutions[i].marker.delete()
+    institutions.pop(i)
+    show_institution()
 
 def open_form_clients():
     def add_client() -> None:
@@ -261,6 +273,12 @@ def show_client():
     for idx, client in enumerate(clients):
         listbox_lista_obiektow3.insert(idx, f'{idx + 1}. {client.name} {client.surname}')
 
+def remove_client():
+    i = listbox_lista_obiektow3.index(ACTIVE)
+    clients[i].marker.delete()
+    clients.pop(i)
+    show_client()
+
 root = Tk()
 
 root.geometry("1400x850")
@@ -292,7 +310,7 @@ listbox_lista_obiektow.grid(row=1, column=0, columnspan=4)
 button_pokaz_szczegoly = Button(ramka_lista_obiektow, text='Pokaz szczegóły')
 button_pokaz_szczegoly.grid(row=2, column=0, sticky=W)
 
-button_usun_obiekt = Button(ramka_lista_obiektow, text='Usuń')
+button_usun_obiekt = Button(ramka_lista_obiektow, text='Usuń', command=remove_employee)
 button_usun_obiekt.grid(row=2, column=1)
 
 button_edytuj_obiekt = Button(ramka_lista_obiektow, text='Edytuj')
@@ -311,7 +329,7 @@ listbox_lista_obiektow2.grid(row=1, column=0, columnspan=4)
 button_pokaz_szczegoly2 = Button(ramka_lista_obiektow2, text='Pokaz szczegóły')
 button_pokaz_szczegoly2.grid(row=2, column=0, sticky=W)
 
-button_usun_obiekt2 = Button(ramka_lista_obiektow2, text='Usuń')
+button_usun_obiekt2 = Button(ramka_lista_obiektow2, text='Usuń', command=remove_institution)
 button_usun_obiekt2.grid(row=2, column=1)
 
 button_edytuj_obiekt2 = Button(ramka_lista_obiektow2, text='Edytuj')
@@ -330,7 +348,7 @@ listbox_lista_obiektow3.grid(row=1, column=0, columnspan=4)
 button_pokaz_szczegoly3 = Button(ramka_lista_obiektow3, text='Pokaz szczegóły')
 button_pokaz_szczegoly3.grid(row=2, column=0, sticky=W)
 
-button_usun_obiekt3 = Button(ramka_lista_obiektow3, text='Usuń')
+button_usun_obiekt3 = Button(ramka_lista_obiektow3, text='Usuń', command=remove_client)
 button_usun_obiekt3.grid(row=2, column=1)
 
 button_edytuj_obiekt3 = Button(ramka_lista_obiektow3, text='Edytuj')
