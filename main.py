@@ -365,6 +365,7 @@ def remove_client():
     show_client()
 
 root = Tk()
+
 root.geometry("1400x850")
 root.title('proj_ppyt')
 
