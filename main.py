@@ -2,6 +2,7 @@ from tkinter import *
 import tkintermapview
 
 root = Tk()
+
 root.geometry("1400x850")
 root.title('proj_ppyt')
 
@@ -195,6 +196,16 @@ map_widget = tkintermapview.TkinterMapView(ramka_mapa, width=1400, height=600, c
 map_widget.grid(row=0, column=0, columnspan=2)
 map_widget.set_position(52.23, 21.00)
 map_widget.set_zoom(6)
+
+
+
+
+
+
+
+
+
+
 
 
 root.mainloop()
