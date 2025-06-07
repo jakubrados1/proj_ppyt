@@ -13,7 +13,7 @@ class Employee:
         self.instytution = institution
         self.coordinates = self.get_coordinates()
         self.marker = map_widget.set_marker(self.coordinates[0], self.coordinates[1],
-                                            text=f"{self.location} {self.name}")
+                                            text=f"{self.location} {self.name}", marker_color_outside="blue")
 
     def get_coordinates(self) -> list:
         import requests
@@ -32,7 +32,7 @@ class Institution:
         self.employee = employee
         self.coordinates = self.get_coordinates()
         self.marker = map_widget.set_marker(self.coordinates[0], self.coordinates[1],
-                                            text=f"{self.location} {self.name}")
+                                            text=f"{self.location} {self.name}", marker_color_outside="black")
 
     def get_coordinates(self) -> list:
         import requests
@@ -65,6 +65,202 @@ class Client:
             float(response_html.select('.longitude')[1].text.replace(',', '.')),
         ]
 
+def open_form_employees():
+    def add_employee() -> None:
+        name = entry_imie.get()
+        surname = entry_nazwisko.get()
+        location = entry_miejscowosc.get()
+        institution = entry_instytucja.get()
+
+        employee = Employee(name=name, surname=surname, location=location, institution=institution)
+
+        employees.append(employee)
+
+        print(employees)
+
+        entry_imie.delete(0, END)
+        entry_nazwisko.delete(0, END)
+        entry_miejscowosc.delete(0, END)
+        entry_instytucja.delete(0, END)
+
+        entry_imie.focus()
+        show_employee()
+    root_employee = Tk()
+    root_employee.geometry("300x200")
+    root_employee.title('formularz pracownik')
+    ramka_formularz = Frame(root_employee)
+    ramka_formularz.grid(row=0, column=0)
+    # ramka_formularz
+
+    label_formularz = Label(ramka_formularz, text='Formularz:')
+    label_formularz.grid(row=0, column=0)
+
+    label_imie = Label(ramka_formularz, text='Imie:')
+    label_imie.grid(row=1, column=0, sticky=W)
+
+    label_nazwisko = Label(ramka_formularz, text='Nazwisko:')
+    label_nazwisko.grid(row=2, column=0, sticky=W)
+
+    label_miejscowosc = Label(ramka_formularz, text='Miejscowość:')
+    label_miejscowosc.grid(row=3, column=0, sticky=W)
+
+    label_institution = Label(ramka_formularz, text='Instytucja:')
+    label_institution.grid(row=4, column=0, sticky=W)
+
+    entry_imie = Entry(ramka_formularz)
+    entry_imie.grid(row=1, column=1)
+
+    entry_nazwisko = Entry(ramka_formularz)
+    entry_nazwisko.grid(row=2, column=1)
+
+    entry_miejscowosc = Entry(ramka_formularz)
+    entry_miejscowosc.grid(row=3, column=1)
+
+    entry_instytucja = Entry(ramka_formularz)
+    entry_instytucja.grid(row=4, column=1)
+
+    button_dodaj_obiekt = Button(ramka_formularz, text='Dodaj', command=add_employee)
+    button_dodaj_obiekt.grid(row=5, column=0, columnspan=2)
+
+    root_employee.mainloop()
+
+
+def show_employee():
+    listbox_lista_obiektow.delete(0, END)
+    for idx, employee in enumerate(employees):
+        listbox_lista_obiektow.insert(idx, f'{idx + 1}. {employee.name} {employee.surname}')
+
+def open_form_institutions():
+    def add_institution() -> None:
+        name = entry_nazwa.get()
+        location = entry_miejscowosc.get()
+        employee = entry_pracownik.get()
+
+        institution = Institution(name=name, location=location, employee=employee)
+
+        institutions.append(institution)
+
+        print(institutions)
+
+        entry_nazwa.delete(0, END)
+        entry_miejscowosc.delete(0, END)
+        entry_pracownik.delete(0, END)
+        entry_nazwa.focus()
+
+        show_institution()
+
+    root_institution = Tk()
+    root_institution.geometry("300x200")
+    root_institution.title('formularz instytucja')
+    ramka_formularz = Frame(root_institution)
+    ramka_formularz.grid(row=0, column=0)
+    # ramka_formularz
+
+    label_formularz = Label(ramka_formularz, text='Formularz:')
+    label_formularz.grid(row=0, column=0)
+
+    label_nazwa = Label(ramka_formularz, text='Nazwa:')
+    label_nazwa.grid(row=1, column=0, sticky=W)
+
+    label_miejscowosc = Label(ramka_formularz, text='Miejscowość:')
+    label_miejscowosc.grid(row=2, column=0, sticky=W)
+
+    label_pracownik = Label(ramka_formularz, text='Liczba pracowników:')
+    label_pracownik.grid(row=3, column=0, sticky=W)
+
+    entry_nazwa = Entry(ramka_formularz)
+    entry_nazwa.grid(row=1, column=1)
+
+    entry_miejscowosc = Entry(ramka_formularz)
+    entry_miejscowosc.grid(row=2, column=1)
+
+    entry_pracownik = Entry(ramka_formularz)
+    entry_pracownik.grid(row=3, column=1)
+
+    button_dodaj_obiekt = Button(ramka_formularz, text='Dodaj', command=add_institution)
+    button_dodaj_obiekt.grid(row=4, column=0, columnspan=2)
+
+    root_institution.mainloop()
+
+
+def show_institution():
+    listbox_lista_obiektow2.delete(0, END)
+    for idx, institution in enumerate(institutions):
+        listbox_lista_obiektow2.insert(idx, f'{idx + 1}. {institution.name} {institution.location}')
+
+def open_form_clients():
+    def add_client() -> None:
+        name = entry_imie.get()
+        surname = entry_nazwisko.get()
+        location = entry_miejscowosc.get()
+        institution = entry_instytucja.get()
+        pet = entry_pupil.get()
+
+        client = Client(name=name, surname=surname, location=location, institution=institution, pet=pet)
+
+        clients.append(client)
+
+        print(clients)
+
+        entry_imie.delete(0, END)
+        entry_nazwisko.delete(0, END)
+        entry_miejscowosc.delete(0, END)
+        entry_instytucja.delete(0, END)
+        entry_pupil.delete(0, END)
+
+        entry_imie.focus()
+        show_client()
+    root_client = Tk()
+    root_client.geometry("300x200")
+    root_client.title('formularz klient')
+    ramka_formularz = Frame(root_client)
+    ramka_formularz.grid(row=0, column=0)
+    # ramka_formularz
+
+    label_formularz = Label(ramka_formularz, text='Formularz:')
+    label_formularz.grid(row=0, column=0)
+
+    label_imie = Label(ramka_formularz, text='Imie:')
+    label_imie.grid(row=1, column=0, sticky=W)
+
+    label_nazwisko = Label(ramka_formularz, text='Nazwisko:')
+    label_nazwisko.grid(row=2, column=0, sticky=W)
+
+    label_miejscowosc = Label(ramka_formularz, text='Miejscowość:')
+    label_miejscowosc.grid(row=3, column=0, sticky=W)
+
+    label_institution = Label(ramka_formularz, text='Instytucja:')
+    label_institution.grid(row=4, column=0, sticky=W)
+
+    label_pet = Label(ramka_formularz, text='Pupil:')
+    label_pet.grid(row=5, column=0, sticky=W)
+
+    entry_imie = Entry(ramka_formularz)
+    entry_imie.grid(row=1, column=1)
+
+    entry_nazwisko = Entry(ramka_formularz)
+    entry_nazwisko.grid(row=2, column=1)
+
+    entry_miejscowosc = Entry(ramka_formularz)
+    entry_miejscowosc.grid(row=3, column=1)
+
+    entry_instytucja = Entry(ramka_formularz)
+    entry_instytucja.grid(row=4, column=1)
+
+    entry_pupil = Entry(ramka_formularz)
+    entry_pupil.grid(row=5, column=1)
+
+    button_dodaj_obiekt = Button(ramka_formularz, text='Dodaj', command=add_client)
+    button_dodaj_obiekt.grid(row=6, column=0, columnspan=2)
+
+    root_client.mainloop()
+
+
+def show_client():
+    listbox_lista_obiektow3.delete(0, END)
+    for idx, client in enumerate(clients):
+        listbox_lista_obiektow3.insert(idx, f'{idx + 1}. {client.name} {client.surname}')
+
 root = Tk()
 
 root.geometry("1400x850")
@@ -73,7 +269,6 @@ root.title('proj_ppyt')
 ramka_lista_obiektow = Frame(root)
 ramka_lista_obiektow2 = Frame(root)
 ramka_lista_obiektow3 = Frame(root)
-ramka_formularz = Frame(root)
 ramka_szczegoly_obiektu = Frame(root)
 ramka_szczegoly_obiektu2 = Frame(root)
 ramka_szczegoly_obiektu3 = Frame(root)
@@ -82,7 +277,6 @@ ramka_mapa = Frame(root)
 ramka_lista_obiektow.grid(row=0, column=0)
 ramka_lista_obiektow2.grid(row=0, column=1)
 ramka_lista_obiektow3.grid(row=0, column=2)
-# ramka_formularz.grid(row=0, column=2)
 ramka_szczegoly_obiektu.grid(row=1, column=0)
 ramka_szczegoly_obiektu2.grid(row=1, column=1)
 ramka_szczegoly_obiektu3.grid(row=1, column=2)
@@ -104,7 +298,7 @@ button_usun_obiekt.grid(row=2, column=1)
 button_edytuj_obiekt = Button(ramka_lista_obiektow, text='Edytuj')
 button_edytuj_obiekt.grid(row=2, column=2)
 
-button_dodaj_obiekt = Button(ramka_lista_obiektow, text='Dodaj')
+button_dodaj_obiekt = Button(ramka_lista_obiektow, text='Dodaj', command=open_form_employees)
 button_dodaj_obiekt.grid(row=2, column=3, sticky=E)
 
 # ramka_lista_obiektow2
@@ -123,7 +317,7 @@ button_usun_obiekt2.grid(row=2, column=1)
 button_edytuj_obiekt2 = Button(ramka_lista_obiektow2, text='Edytuj')
 button_edytuj_obiekt2.grid(row=2, column=2)
 
-button_dodaj_obiekt2 = Button(ramka_lista_obiektow2, text='Dodaj')
+button_dodaj_obiekt2 = Button(ramka_lista_obiektow2, text='Dodaj', command=open_form_institutions)
 button_dodaj_obiekt2.grid(row=2, column=3, sticky=E)
 
 # ramka_lista_obiektow3
@@ -142,40 +336,8 @@ button_usun_obiekt3.grid(row=2, column=1)
 button_edytuj_obiekt3 = Button(ramka_lista_obiektow3, text='Edytuj')
 button_edytuj_obiekt3.grid(row=2, column=2)
 
-button_dodaj_obiekt3 = Button(ramka_lista_obiektow3, text='Dodaj')
+button_dodaj_obiekt3 = Button(ramka_lista_obiektow3, text='Dodaj', command=open_form_clients)
 button_dodaj_obiekt3.grid(row=2, column=3, sticky=E)
-
-# ramka_formularz
-
-# label_formularz = Label(ramka_formularz, text='Formularz:')
-# label_formularz.grid(row=0, column=0)
-#
-# label_imie = Label(ramka_formularz, text='Imie:')
-# label_imie.grid(row=1, column=0, sticky=W)
-#
-# label_nazwisko = Label(ramka_formularz, text='Nazwisko:')
-# label_nazwisko.grid(row=2, column=0, sticky=W)
-#
-# label_miejscowosc = Label(ramka_formularz, text='Miejscowość:')
-# label_miejscowosc.grid(row=3, column=0, sticky=W)
-#
-# label_post = Label(ramka_formularz, text='Post:')
-# label_post.grid(row=4, column=0, sticky=W)
-#
-# entry_imie = Entry(ramka_formularz)
-# entry_imie.grid(row=1, column=1)
-#
-# entry_nazwisko = Entry(ramka_formularz)
-# entry_nazwisko.grid(row=2, column=1)
-#
-# entry_miejscowosc = Entry(ramka_formularz)
-# entry_miejscowosc.grid(row=3, column=1)
-#
-# entry_post = Entry(ramka_formularz)
-# entry_post.grid(row=4, column=1)
-#
-# button_dodaj_obiekt = Button(ramka_formularz, text='Dodaj')
-# button_dodaj_obiekt.grid(row=5, column=0, columnspan=2)
 
 # ramka_szczegoly_obiektow
 label_pokaz_szczegoly = Label(ramka_szczegoly_obiektu, text='Szczegóły Pracownika:')
