@@ -136,6 +136,91 @@ def remove_employee():
     employees.pop(i)
     show_employee()
 
+def open_edit_employees():
+
+    i = listbox_lista_obiektow.index(ACTIVE)
+
+    def update_employee(i):
+        name = entry_imie.get()
+        surname = entry_nazwisko.get()
+        location = entry_miejscowosc.get()
+        institution = entry_instytucja.get()
+
+        employees[i].name = name
+        employees[i].surname = surname
+        employees[i].location = location
+        employees[i].institution = institution
+
+        employees[i].coordinates = employees[i].get_coordinates()
+        employees[i].marker.delete()
+        employees[i].marker = map_widget.set_marker(employees[i].coordinates[0], employees[i].coordinates[1],
+                                                text=f"{employees[i].location} {employees[i].name}", marker_color_outside="blue")
+        employees.pop(i)
+        name = entry_imie.get()
+        surname = entry_nazwisko.get()
+        location = entry_miejscowosc.get()
+        institution = entry_instytucja.get()
+
+        employee = Employee(name=name, surname=surname, location=location, institution=institution)
+
+        employees.append(employee)
+
+        print(employees)
+
+        entry_imie.delete(0, END)
+        entry_nazwisko.delete(0, END)
+        entry_miejscowosc.delete(0, END)
+        entry_instytucja.delete(0, END)
+
+        entry_imie.focus()
+        show_employee()
+        root_employee.destroy()
+
+    root_employee = Tk()
+    root_employee.geometry("300x200")
+    root_employee.title('formularz pracownik')
+    ramka_formularz = Frame(root_employee)
+    ramka_formularz.grid(row=0, column=0)
+    # ramka_formularz
+
+    label_formularz = Label(ramka_formularz, text='Formularz:')
+    label_formularz.grid(row=0, column=0)
+
+    label_imie = Label(ramka_formularz, text='Imie:')
+    label_imie.grid(row=1, column=0, sticky=W)
+
+    label_nazwisko = Label(ramka_formularz, text='Nazwisko:')
+    label_nazwisko.grid(row=2, column=0, sticky=W)
+
+    label_miejscowosc = Label(ramka_formularz, text='Miejscowość:')
+    label_miejscowosc.grid(row=3, column=0, sticky=W)
+
+    label_institution = Label(ramka_formularz, text='Instytucja:')
+    label_institution.grid(row=4, column=0, sticky=W)
+
+    entry_imie = Entry(ramka_formularz)
+    entry_imie.grid(row=1, column=1)
+
+    entry_nazwisko = Entry(ramka_formularz)
+    entry_nazwisko.grid(row=2, column=1)
+
+    entry_miejscowosc = Entry(ramka_formularz)
+    entry_miejscowosc.grid(row=3, column=1)
+
+    entry_instytucja = Entry(ramka_formularz)
+    entry_instytucja.grid(row=4, column=1)
+
+    entry_imie.insert(0, employees[i].name)
+    entry_nazwisko.insert(0, employees[i].surname)
+    entry_miejscowosc.insert(0, employees[i].location)
+    entry_instytucja.insert(0, employees[i].instytution)
+
+    button_dodaj_obiekt = Button(ramka_formularz, text='Zapisz', command=lambda: update_employee(i))
+    button_dodaj_obiekt.grid(row=5, column=0, columnspan=2)
+
+    root_employee.mainloop()
+
+
 def open_form_institutions():
     def add_institution() -> None:
         name = entry_nazwa.get()
@@ -313,7 +398,7 @@ button_pokaz_szczegoly.grid(row=2, column=0, sticky=W)
 button_usun_obiekt = Button(ramka_lista_obiektow, text='Usuń', command=remove_employee)
 button_usun_obiekt.grid(row=2, column=1)
 
-button_edytuj_obiekt = Button(ramka_lista_obiektow, text='Edytuj')
+button_edytuj_obiekt = Button(ramka_lista_obiektow, text='Edytuj', command=open_edit_employees)
 button_edytuj_obiekt.grid(row=2, column=2)
 
 button_dodaj_obiekt = Button(ramka_lista_obiektow, text='Dodaj', command=open_form_employees)
@@ -446,16 +531,5 @@ map_widget = tkintermapview.TkinterMapView(ramka_mapa, width=1400, height=600, c
 map_widget.grid(row=0, column=0, columnspan=2)
 map_widget.set_position(52.23, 21.00)
 map_widget.set_zoom(6)
-
-
-
-
-
-
-
-
-
-
-
 
 root.mainloop()
