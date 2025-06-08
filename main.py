@@ -228,6 +228,32 @@ def show_employee_details():
     map_widget.set_zoom(15)
     map_widget.set_position(employees[i].coordinates[0], employees[i].coordinates[1])
 
+def open_map_employee():
+    i = listbox_lista_obiektow2.index(ACTIVE)
+
+    root_map_employee = Toplevel()
+
+    root_map_employee.geometry("1400x700")
+    root_map_employee.title('mapa pracownicy')
+
+    ramka_mapa1 = Frame(root_map_employee)
+    ramka_mapa1.grid(row=0, column=0)
+
+    map_widget1 = tkintermapview.TkinterMapView(ramka_mapa1, width=1400, height=700, corner_radius=0)
+    map_widget1.grid(row=0, column=0, columnspan=2)
+    map_widget1.set_position(52.23, 21.00)
+    map_widget1.set_zoom(6)
+
+    map_widget1.set_marker(institutions[i].coordinates[0], institutions[i].coordinates[1],
+                                                   text=f"{institutions[i].location} {institutions[i].name}", marker_color_outside="black")
+
+    for idx, employee in enumerate(employees):
+        if employees[idx].instytution == institutions[i].name:
+            map_widget1.set_marker(employees[idx].coordinates[0], employees[idx].coordinates[1],
+                                                     text=f"{employees[idx].location} {employees[idx].name}", marker_color_outside="blue")
+
+    root_map_employee.mainloop()
+
 def open_form_institutions():
     def add_institution() -> None:
         name = entry_nazwa.get()
@@ -555,6 +581,32 @@ def show_client_details():
     map_widget.set_zoom(15)
     map_widget.set_position(clients[i].coordinates[0], clients[i].coordinates[1])
 
+def open_map_client():
+    i = listbox_lista_obiektow2.index(ACTIVE)
+
+    root_map_client = Toplevel()
+
+    root_map_client.geometry("1400x700")
+    root_map_client.title('mapa klienci')
+
+    ramka_mapa2 = Frame(root_map_client)
+    ramka_mapa2.grid(row=0, column=0)
+
+    map_widget2 = tkintermapview.TkinterMapView(ramka_mapa2, width=1400, height=700, corner_radius=0)
+    map_widget2.grid(row=0, column=0, columnspan=2)
+    map_widget2.set_position(52.23, 21.00)
+    map_widget2.set_zoom(6)
+
+    map_widget2.set_marker(institutions[i].coordinates[0], institutions[i].coordinates[1],
+                                                   text=f"{institutions[i].location} {institutions[i].name}", marker_color_outside="black")
+
+    for idx, client in enumerate(clients):
+        if clients[idx].instytution == institutions[i].name:
+            map_widget2.set_marker(clients[idx].coordinates[0], clients[idx].coordinates[1],
+                                                     text=f"{clients[idx].location} {clients[idx].name}")
+
+    root_map_client.mainloop()
+
 root = Tk()
 
 root.geometry("1400x850")
@@ -599,6 +651,9 @@ button_dodaj_obiekt.grid(row=2, column=3, sticky=E)
 label_lista_obiektow2 = Label(ramka_lista_obiektow2, text='Lista Placówek:')
 label_lista_obiektow2.grid(row=0, column=0)
 
+button_map1 = Button(ramka_lista_obiektow2, text='Wyświetl pracowników wybranej placówki', command=open_map_employee)
+button_map1.grid(row=0, column=1, columnspan=3)
+
 listbox_lista_obiektow2 = Listbox(ramka_lista_obiektow2, width=60, height=10)
 listbox_lista_obiektow2.grid(row=1, column=0, columnspan=4)
 
@@ -617,6 +672,9 @@ button_dodaj_obiekt2.grid(row=2, column=3, sticky=E)
 # ramka_lista_obiektow3
 label_lista_obiektow3 = Label(ramka_lista_obiektow3, text='Lista Klientów:')
 label_lista_obiektow3.grid(row=0, column=0)
+
+button_map2 = Button(ramka_lista_obiektow3, text='Wyświetl klientów wybranej placówki', command=open_map_client)
+button_map2.grid(row=0, column=1, columnspan=3)
 
 listbox_lista_obiektow3 = Listbox(ramka_lista_obiektow3, width=60, height=10)
 listbox_lista_obiektow3.grid(row=1, column=0, columnspan=4)
