@@ -124,7 +124,6 @@ def open_form_employees():
 
     root_employee.mainloop()
 
-
 def show_employee():
     listbox_lista_obiektow.delete(0, END)
     for idx, employee in enumerate(employees):
@@ -220,6 +219,14 @@ def open_edit_employees():
 
     root_employee.mainloop()
 
+def show_employee_details():
+    i = listbox_lista_obiektow.index(ACTIVE)
+    label_szczegoly_obiektu_name_wartosc.config(text=employees[i].name)
+    label_szczegoly_obiektu_surname_wartosc.config(text=employees[i].surname)
+    label_szczegoly_obiektu_miejscowosc_wartosc.config(text=employees[i].location)
+    label_szczegoly_obiektu_institution_wartosc.config(text=employees[i].instytution)
+    map_widget.set_zoom(15)
+    map_widget.set_position(employees[i].coordinates[0], employees[i].coordinates[1])
 
 def open_form_institutions():
     def add_institution() -> None:
@@ -356,6 +363,14 @@ def open_edit_institution():
 
     root_institution.mainloop()
 
+def show_institution_details():
+    i = listbox_lista_obiektow2.index(ACTIVE)
+    label_szczegoly_obiektu2_name_wartosc.config(text=institutions[i].name)
+    label_szczegoly_obiektu_miejscowosc2_wartosc.config(text=institutions[i].location)
+    label_szczegoly_obiektu_employees_wartosc.config(text=institutions[i].employee)
+    map_widget.set_zoom(15)
+    map_widget.set_position(institutions[i].coordinates[0], institutions[i].coordinates[1])
+
 def open_form_clients():
     def add_client() -> None:
         name = entry_imie.get()
@@ -383,6 +398,7 @@ def open_form_clients():
     root_client.title('formularz klient')
     ramka_formularz = Frame(root_client)
     ramka_formularz.grid(row=0, column=0)
+
     # ramka_formularz
 
     label_formularz = Label(ramka_formularz, text='Formularz:')
@@ -529,6 +545,16 @@ def open_edit_clients():
 
     root_client.mainloop()
 
+def show_client_details():
+    i = listbox_lista_obiektow3.index(ACTIVE)
+    label_szczegoly_obiektu3_name_wartosc.config(text=clients[i].name)
+    label_szczegoly_obiektu3_surname_wartosc.config(text=clients[i].surname)
+    label_szczegoly_obiektu3_miejscowosc2_wartosc.config(text=clients[i].location)
+    label_szczegoly_obiektu3_institution_wartosc.config(text=clients[i].instytution)
+    label_szczegoly_obiektu_pet_wartosc.config(text=clients[i].pet)
+    map_widget.set_zoom(15)
+    map_widget.set_position(clients[i].coordinates[0], clients[i].coordinates[1])
+
 root = Tk()
 
 root.geometry("1400x850")
@@ -557,7 +583,7 @@ label_lista_obiektow.grid(row=0, column=0)
 listbox_lista_obiektow = Listbox(ramka_lista_obiektow, width=60, height=10)
 listbox_lista_obiektow.grid(row=1, column=0, columnspan=4)
 
-button_pokaz_szczegoly = Button(ramka_lista_obiektow, text='Pokaz szczegóły')
+button_pokaz_szczegoly = Button(ramka_lista_obiektow, text='Pokaż szczegóły', command=show_employee_details)
 button_pokaz_szczegoly.grid(row=2, column=0, sticky=W)
 
 button_usun_obiekt = Button(ramka_lista_obiektow, text='Usuń', command=remove_employee)
@@ -576,7 +602,7 @@ label_lista_obiektow2.grid(row=0, column=0)
 listbox_lista_obiektow2 = Listbox(ramka_lista_obiektow2, width=60, height=10)
 listbox_lista_obiektow2.grid(row=1, column=0, columnspan=4)
 
-button_pokaz_szczegoly2 = Button(ramka_lista_obiektow2, text='Pokaz szczegóły')
+button_pokaz_szczegoly2 = Button(ramka_lista_obiektow2, text='Pokaż szczegóły', command=show_institution_details)
 button_pokaz_szczegoly2.grid(row=2, column=0, sticky=W)
 
 button_usun_obiekt2 = Button(ramka_lista_obiektow2, text='Usuń', command=remove_institution)
@@ -595,7 +621,7 @@ label_lista_obiektow3.grid(row=0, column=0)
 listbox_lista_obiektow3 = Listbox(ramka_lista_obiektow3, width=60, height=10)
 listbox_lista_obiektow3.grid(row=1, column=0, columnspan=4)
 
-button_pokaz_szczegoly3 = Button(ramka_lista_obiektow3, text='Pokaz szczegóły')
+button_pokaz_szczegoly3 = Button(ramka_lista_obiektow3, text='Pokaż szczegóły', command=show_client_details)
 button_pokaz_szczegoly3.grid(row=2, column=0, sticky=W)
 
 button_usun_obiekt3 = Button(ramka_lista_obiektow3, text='Usuń', command=remove_client)
