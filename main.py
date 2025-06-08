@@ -133,6 +133,7 @@ def show_employee():
 def remove_employee():
     i = listbox_lista_obiektow.index(ACTIVE)
     employees[i].marker.delete()
+    employees[i].marker.delete()
     employees.pop(i)
     show_employee()
 
@@ -153,8 +154,7 @@ def open_edit_employees():
 
         employees[i].coordinates = employees[i].get_coordinates()
         employees[i].marker.delete()
-        employees[i].marker = map_widget.set_marker(employees[i].coordinates[0], employees[i].coordinates[1],
-                                                text=f"{employees[i].location} {employees[i].name}", marker_color_outside="blue")
+
         employees.pop(i)
         name = entry_imie.get()
         surname = entry_nazwisko.get()
@@ -273,7 +273,6 @@ def open_form_institutions():
 
     root_institution.mainloop()
 
-
 def show_institution():
     listbox_lista_obiektow2.delete(0, END)
     for idx, institution in enumerate(institutions):
@@ -284,6 +283,78 @@ def remove_institution():
     institutions[i].marker.delete()
     institutions.pop(i)
     show_institution()
+
+def open_edit_institution():
+
+    i = listbox_lista_obiektow2.index(ACTIVE)
+
+    def update_institution(i):
+        name = entry_nazwa.get()
+        location = entry_miejscowosc.get()
+        employee = entry_pracownik.get()
+
+        institutions[i].name = name
+        institutions[i].location = location
+        institutions[i].employee = employee
+
+        institutions[i].coordinates = institutions[i].get_coordinates()
+        institutions[i].marker.delete()
+
+        institutions.pop(i)
+        name = entry_nazwa.get()
+        location = entry_miejscowosc.get()
+        employee = entry_pracownik.get()
+
+        institution = Institution(name=name, location=location, employee=employee)
+
+        institutions.append(institution)
+
+        print(institutions)
+
+        entry_nazwa.delete(0, END)
+        entry_miejscowosc.delete(0, END)
+        entry_pracownik.delete(0, END)
+
+        entry_nazwa.focus()
+        show_institution()
+        root_institution.destroy()
+
+    root_institution = Tk()
+    root_institution.geometry("300x200")
+    root_institution.title('formularz instytucja')
+    ramka_formularz = Frame(root_institution)
+    ramka_formularz.grid(row=0, column=0)
+    # ramka_formularz
+
+    label_formularz = Label(ramka_formularz, text='Formularz:')
+    label_formularz.grid(row=0, column=0)
+
+    label_nazwa = Label(ramka_formularz, text='Nazwa:')
+    label_nazwa.grid(row=1, column=0, sticky=W)
+
+    label_miejscowosc = Label(ramka_formularz, text='Miejscowość:')
+    label_miejscowosc.grid(row=2, column=0, sticky=W)
+
+    label_pracownik = Label(ramka_formularz, text='Liczba pracowników:')
+    label_pracownik.grid(row=3, column=0, sticky=W)
+
+    entry_nazwa = Entry(ramka_formularz)
+    entry_nazwa.grid(row=1, column=1)
+
+    entry_miejscowosc = Entry(ramka_formularz)
+    entry_miejscowosc.grid(row=2, column=1)
+
+    entry_pracownik = Entry(ramka_formularz)
+    entry_pracownik.grid(row=3, column=1)
+
+    entry_nazwa.insert(0, institutions[i].name)
+    entry_miejscowosc.insert(0, institutions[i].location)
+    entry_pracownik.insert(0, institutions[i].employee)
+
+    button_dodaj_obiekt = Button(ramka_formularz, text='Zapisz', command=lambda: update_institution(i))
+    button_dodaj_obiekt.grid(row=4, column=0, columnspan=2)
+
+    root_institution.mainloop()
 
 def open_form_clients():
     def add_client() -> None:
@@ -364,6 +435,100 @@ def remove_client():
     clients.pop(i)
     show_client()
 
+def open_edit_clients():
+
+    i = listbox_lista_obiektow3.index(ACTIVE)
+
+    def update_client(i):
+        name = entry_imie.get()
+        surname = entry_nazwisko.get()
+        location = entry_miejscowosc.get()
+        institution = entry_instytucja.get()
+        pet = entry_pupil.get()
+
+        clients[i].name = name
+        clients[i].surname = surname
+        clients[i].location = location
+        clients[i].institution = institution
+        clients[i].pet = pet
+
+        clients[i].coordinates = clients[i].get_coordinates()
+        clients[i].marker.delete()
+
+        clients.pop(i)
+        name = entry_imie.get()
+        surname = entry_nazwisko.get()
+        location = entry_miejscowosc.get()
+        institution = entry_instytucja.get()
+        pet = entry_pupil.get()
+
+        client = Client(name=name, surname=surname, location=location, institution=institution, pet=pet)
+
+        clients.append(client)
+
+        print(clients)
+
+        entry_imie.delete(0, END)
+        entry_nazwisko.delete(0, END)
+        entry_miejscowosc.delete(0, END)
+        entry_instytucja.delete(0, END)
+        entry_pupil.delete(0, END)
+
+        entry_imie.focus()
+        show_client()
+        root_client.destroy()
+
+    root_client = Tk()
+    root_client.geometry("300x200")
+    root_client.title('formularz klient')
+    ramka_formularz = Frame(root_client)
+    ramka_formularz.grid(row=0, column=0)
+    # ramka_formularz
+
+    label_formularz = Label(ramka_formularz, text='Formularz:')
+    label_formularz.grid(row=0, column=0)
+
+    label_imie = Label(ramka_formularz, text='Imie:')
+    label_imie.grid(row=1, column=0, sticky=W)
+
+    label_nazwisko = Label(ramka_formularz, text='Nazwisko:')
+    label_nazwisko.grid(row=2, column=0, sticky=W)
+
+    label_miejscowosc = Label(ramka_formularz, text='Miejscowość:')
+    label_miejscowosc.grid(row=3, column=0, sticky=W)
+
+    label_institution = Label(ramka_formularz, text='Instytucja:')
+    label_institution.grid(row=4, column=0, sticky=W)
+
+    label_pet = Label(ramka_formularz, text='Pupil:')
+    label_pet.grid(row=5, column=0, sticky=W)
+
+    entry_imie = Entry(ramka_formularz)
+    entry_imie.grid(row=1, column=1)
+
+    entry_nazwisko = Entry(ramka_formularz)
+    entry_nazwisko.grid(row=2, column=1)
+
+    entry_miejscowosc = Entry(ramka_formularz)
+    entry_miejscowosc.grid(row=3, column=1)
+
+    entry_instytucja = Entry(ramka_formularz)
+    entry_instytucja.grid(row=4, column=1)
+
+    entry_pupil = Entry(ramka_formularz)
+    entry_pupil.grid(row=5, column=1)
+
+    entry_imie.insert(0, clients[i].name)
+    entry_nazwisko.insert(0, clients[i].surname)
+    entry_miejscowosc.insert(0, clients[i].location)
+    entry_instytucja.insert(0, clients[i].instytution)
+    entry_pupil.insert(0, clients[i].pet)
+
+    button_dodaj_obiekt = Button(ramka_formularz, text='Zapisz', command=lambda: update_client(i))
+    button_dodaj_obiekt.grid(row=6, column=0, columnspan=2)
+
+    root_client.mainloop()
+
 root = Tk()
 root.geometry("1400x850")
 root.title('proj_ppyt')
@@ -416,7 +581,7 @@ button_pokaz_szczegoly2.grid(row=2, column=0, sticky=W)
 button_usun_obiekt2 = Button(ramka_lista_obiektow2, text='Usuń', command=remove_institution)
 button_usun_obiekt2.grid(row=2, column=1)
 
-button_edytuj_obiekt2 = Button(ramka_lista_obiektow2, text='Edytuj')
+button_edytuj_obiekt2 = Button(ramka_lista_obiektow2, text='Edytuj', command=open_edit_institution)
 button_edytuj_obiekt2.grid(row=2, column=2)
 
 button_dodaj_obiekt2 = Button(ramka_lista_obiektow2, text='Dodaj', command=open_form_institutions)
@@ -435,7 +600,7 @@ button_pokaz_szczegoly3.grid(row=2, column=0, sticky=W)
 button_usun_obiekt3 = Button(ramka_lista_obiektow3, text='Usuń', command=remove_client)
 button_usun_obiekt3.grid(row=2, column=1)
 
-button_edytuj_obiekt3 = Button(ramka_lista_obiektow3, text='Edytuj')
+button_edytuj_obiekt3 = Button(ramka_lista_obiektow3, text='Edytuj', command=open_edit_clients)
 button_edytuj_obiekt3.grid(row=2, column=2)
 
 button_dodaj_obiekt3 = Button(ramka_lista_obiektow3, text='Dodaj', command=open_form_clients)
