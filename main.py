@@ -609,7 +609,7 @@ def open_map_client():
 
 root = Tk()
 
-root.geometry("1400x850")
+root.geometry("1400x900")
 root.title('proj_ppyt')
 
 ramka_lista_obiektow = Frame(root)
@@ -623,20 +623,20 @@ ramka_mapa = Frame(root)
 ramka_lista_obiektow.grid(row=0, column=0)
 ramka_lista_obiektow2.grid(row=0, column=1)
 ramka_lista_obiektow3.grid(row=0, column=2)
-ramka_szczegoly_obiektu.grid(row=1, column=0)
-ramka_szczegoly_obiektu2.grid(row=1, column=1)
-ramka_szczegoly_obiektu3.grid(row=1, column=2)
+ramka_szczegoly_obiektu.grid(row=1, column=0, pady=8)
+ramka_szczegoly_obiektu2.grid(row=1, column=1, pady=8)
+ramka_szczegoly_obiektu3.grid(row=1, column=2, pady=8)
 ramka_mapa.grid(row=2, column=0, columnspan=3)
 
 # ramka_lista_obiektow
 label_lista_obiektow = Label(ramka_lista_obiektow, text='Lista Pracowników:')
-label_lista_obiektow.grid(row=0, column=0)
+label_lista_obiektow.grid(row=0, column=0, pady=8)
 
 listbox_lista_obiektow = Listbox(ramka_lista_obiektow, width=60, height=10)
 listbox_lista_obiektow.grid(row=1, column=0, columnspan=4)
 
 button_pokaz_szczegoly = Button(ramka_lista_obiektow, text='Pokaż szczegóły', command=show_employee_details)
-button_pokaz_szczegoly.grid(row=2, column=0, sticky=W)
+button_pokaz_szczegoly.grid(row=2, column=0, sticky=W, pady=8)
 
 button_usun_obiekt = Button(ramka_lista_obiektow, text='Usuń', command=remove_employee)
 button_usun_obiekt.grid(row=2, column=1)
@@ -649,7 +649,7 @@ button_dodaj_obiekt.grid(row=2, column=3, sticky=E)
 
 # ramka_lista_obiektow2
 label_lista_obiektow2 = Label(ramka_lista_obiektow2, text='Lista Placówek:')
-label_lista_obiektow2.grid(row=0, column=0)
+label_lista_obiektow2.grid(row=0, column=0, pady=8)
 
 button_map1 = Button(ramka_lista_obiektow2, text='Wyświetl pracowników wybranej placówki', command=open_map_employee)
 button_map1.grid(row=0, column=1, columnspan=3)
@@ -658,7 +658,7 @@ listbox_lista_obiektow2 = Listbox(ramka_lista_obiektow2, width=60, height=10)
 listbox_lista_obiektow2.grid(row=1, column=0, columnspan=4)
 
 button_pokaz_szczegoly2 = Button(ramka_lista_obiektow2, text='Pokaż szczegóły', command=show_institution_details)
-button_pokaz_szczegoly2.grid(row=2, column=0, sticky=W)
+button_pokaz_szczegoly2.grid(row=2, column=0, sticky=W, pady=8)
 
 button_usun_obiekt2 = Button(ramka_lista_obiektow2, text='Usuń', command=remove_institution)
 button_usun_obiekt2.grid(row=2, column=1)
@@ -671,7 +671,7 @@ button_dodaj_obiekt2.grid(row=2, column=3, sticky=E)
 
 # ramka_lista_obiektow3
 label_lista_obiektow3 = Label(ramka_lista_obiektow3, text='Lista Klientów:')
-label_lista_obiektow3.grid(row=0, column=0)
+label_lista_obiektow3.grid(row=0, column=0, pady=8)
 
 button_map2 = Button(ramka_lista_obiektow3, text='Wyświetl klientów wybranej placówki', command=open_map_client)
 button_map2.grid(row=0, column=1, columnspan=3)
@@ -680,7 +680,7 @@ listbox_lista_obiektow3 = Listbox(ramka_lista_obiektow3, width=60, height=10)
 listbox_lista_obiektow3.grid(row=1, column=0, columnspan=4)
 
 button_pokaz_szczegoly3 = Button(ramka_lista_obiektow3, text='Pokaż szczegóły', command=show_client_details)
-button_pokaz_szczegoly3.grid(row=2, column=0, sticky=W)
+button_pokaz_szczegoly3.grid(row=2, column=0, sticky=W, pady=8)
 
 button_usun_obiekt3 = Button(ramka_lista_obiektow3, text='Usuń', command=remove_client)
 button_usun_obiekt3.grid(row=2, column=1)
