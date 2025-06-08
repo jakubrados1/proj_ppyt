@@ -530,6 +530,7 @@ def open_edit_clients():
     root_client.mainloop()
 
 root = Tk()
+
 root.geometry("1400x850")
 root.title('proj_ppyt')
 
